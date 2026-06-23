@@ -89,15 +89,14 @@ MONGODB_URI=your_mongodb_connection_string
 # Email (Resend)
 RESEND_API_KEY=your_resend_api_key
 
-# AI (Google Gemini)
-GOOGLE_GENERATIVE_AI_API_KEY=your_gemini_api_key
 ```
 
 ---
 
 ## 📁 Project Structure
-src/
 
+```
+src/
 ├── app/
 │   ├── (auth)/
 │   │   ├── sign-in/
@@ -117,9 +116,8 @@ src/
 ├── models/
 ├── schemas/
 ├── lib/
-└── proxy.ts # Next.js 16 Middleware
-
----
+└── proxy.ts          # Next.js 16 Middleware
+```
 
 ## 📸 How It Works
 
