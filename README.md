@@ -13,7 +13,6 @@ Secret Drop is an anonymous messaging platform where users can receive honest, u
 - 🔗 **Unique Public Profile Link** — Share your link, anyone can message you anonymously
 - 🔐 **Secure Authentication** — Email/username login with NextAuth.js
 - ✉️ **Email Verification** — Verify your account via Resend email service
-- 🤖 **AI-Suggested Messages** — Google Gemini AI suggests message ideas for senders
 - 📬 **Message Management** — Accept or pause incoming messages from your dashboard
 - 🗑️ **Delete Messages** — Remove any message from your inbox
 - 📱 **Responsive UI** — Clean, mobile-friendly design with Tailwind CSS & shadcn/ui
@@ -29,7 +28,6 @@ Secret Drop is an anonymous messaging platform where users can receive honest, u
 | Authentication | NextAuth.js v4 |
 | Database | MongoDB + Mongoose |
 | Email | Resend + React Email |
-| AI | Google Gemini (via AI SDK) |
 | UI | shadcn/ui + Tailwind CSS v4 |
 | Forms | React Hook Form + Zod |
 | Deployment | Vercel |
@@ -43,7 +41,6 @@ Secret Drop is an anonymous messaging platform where users can receive honest, u
 - Node.js 18+
 - MongoDB database (e.g. MongoDB Atlas)
 - Resend account for emails
-- Google Gemini API key
 
 ### Installation
 
@@ -132,10 +129,5 @@ Contributions are welcome! Feel free to open an issue or submit a pull request.
 
 ---
 
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
----
 
 <p align="center">Made with ❤️ by <a href="https://github.com/Diab0licaI">Diab0lical</a></p>
