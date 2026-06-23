@@ -2,22 +2,26 @@
   "name": "secret_drop",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
-  },
-  "dependencies": {
+"scripts": {
+  "dev": "node --dns-result-order=ipv4first ./node_modules/next/dist/bin/next dev",
+  "build": "next build",
+  "start": "node --dns-result-order=ipv4first ./node_modules/next/dist/bin/next start",
+  "lint": "eslint"
+},"dependencies": {
+    "@ai-sdk/react": "^3.0.210",
     "@google/generative-ai": "^0.24.1",
     "@hookform/resolvers": "^5.4.0",
     "@react-email/components": "^1.0.12",
     "@react-email/render": "^2.0.8",
+    "ai": "^6.0.208",
     "axios": "^1.18.0",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dayjs": "^1.11.21",
+    "embla-carousel-autoplay": "^8.6.0",
+    "embla-carousel-react": "^8.6.0",
     "lucide-react": "^1.21.0",
     "mongoose": "^9.3.1",
     "next": "^16.2.2",

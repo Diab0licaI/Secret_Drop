@@ -15,10 +15,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useToast } from '@/components/ui/use-toast';
+import { toast } from 'sonner';
 import { signInSchema } from '@/schemas/signInSchema';
 
-export default function SignInForm() {
+export default function SignInPage() {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof signInSchema>>({
@@ -29,7 +29,6 @@ export default function SignInForm() {
     },
   });
 
-  const { toast } = useToast();
   const onSubmit = async (data: z.infer<typeof signInSchema>) => {
     const result = await signIn('credentials', {
       redirect: false,
@@ -39,39 +38,39 @@ export default function SignInForm() {
 
     if (result?.error) {
       if (result.error === 'CredentialsSignin') {
-        toast({
-          title: 'Login Failed',
-          description: 'Incorrect username or password',
-          variant: 'destructive',
-        });
+        toast.error('Incorrect username or password');
       } else {
-        toast({
-          title: 'Error',
-          description: result.error,
-          variant: 'destructive',
-        });
+        toast.error(result.error);
       }
+      return;
     }
 
     if (result?.url) {
+      toast.success('Login successful');
       router.replace('/dashboard');
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-800">
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
+    <div className="flex justify-center items-center min-h-screen bg-[#0f172a] px-4">
+      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-xl shadow-xl">
         <div className="text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
+          <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 mb-3 leading-tight">
             Welcome Back to True Feedback
           </h1>
-          <p className="mb-4">Sign in to continue your secret conversations</p>
+          <p className="text-gray-500">
+            Sign in to continue your secret conversations
+          </p>
         </div>
+
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-5"
+          >
             <FormField
-              name="identifier"
               control={form.control}
+              name="identifier"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Email/Username</FormLabel>
@@ -80,24 +79,40 @@ export default function SignInForm() {
                 </FormItem>
               )}
             />
+
             <FormField
-              name="password"
               control={form.control}
+              name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <div className="flex items-center justify-between">
+                    <FormLabel>Password</FormLabel>
+                    <Link
+                      href="/forgot-password"
+                      className="text-sm text-blue-600 hover:text-blue-800"
+                    >
+                      Forgot password?
+                    </Link>
+                  </div>
                   <Input type="password" {...field} />
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button className='w-full' type="submit">Sign In</Button>
+
+            <Button className="w-full bg-[#0f172a] hover:bg-[#1e293b] text-white" type="submit">
+              Sign In
+            </Button>
           </form>
         </Form>
-        <div className="text-center mt-4">
-          <p>
+
+        <div className="text-center pt-2">
+          <p className="text-gray-700">
             Not a member yet?{' '}
-            <Link href="/sign-up" className="text-blue-600 hover:text-blue-800">
+            <Link
+              href="/sign-up"
+              className="text-blue-600 hover:text-blue-800 font-medium"
+            >
               Sign up
             </Link>
           </p>

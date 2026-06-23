@@ -1,31 +1,39 @@
+import { setDefaultResultOrder } from 'dns';
+setDefaultResultOrder('ipv4first');
+
 import mongoose from 'mongoose';
 
-type ConnectionObject = {
-  isConnected?: number;
+const cached = global as typeof global & {
+  mongoose?: { conn: typeof mongoose | null; promise: Promise<typeof mongoose> | null }
 };
 
-const connection: ConnectionObject = {};
+if (!cached.mongoose) {
+  cached.mongoose = { conn: null, promise: null };
+}
 
-async function dbConnect(): Promise<void> {
-  // Check if we have a connection to the database or if it's currently connecting
-  if (connection.isConnected) {
+async function dbConnect(): Promise<typeof mongoose> {
+  if (cached.mongoose!.conn) {
     console.log('Already connected to the database');
-    return;
+    return cached.mongoose!.conn;
+  }
+
+  if (!cached.mongoose!.promise) {
+    cached.mongoose!.promise = mongoose.connect(process.env.MONGODB_URI!, {
+      bufferCommands: false,
+      serverSelectionTimeoutMS: 5000,
+    });
   }
 
   try {
-    // Attempt to connect to the database
-    const db = await mongoose.connect(process.env.MONGODB_URI || '', {});
-
-    connection.isConnected = db.connections[0].readyState;
-
+    cached.mongoose!.conn = await cached.mongoose!.promise;
     console.log('Database connected successfully');
   } catch (error) {
+    cached.mongoose!.promise = null; // reset so next call retries
     console.error('Database connection failed:', error);
-
-    // Graceful exit in case of a connection error
-    process.exit(1);
+    throw error; // don't exit the process, let the route handler deal with it
   }
+
+  return cached.mongoose!.conn;
 }
 
 export default dbConnect;
